@@ -1,0 +1,388 @@
+* {
+    font-family: Roboto, Arial;
+    color: rgb(0, 0, 100);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+body {
+    background-image: url(./images/background.jpg);
+    background-size: cover;
+}
+
+.card {
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+    opacity: 0.9;
+}
+
+.card-opaque {
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+}
+
+.flat {
+    background-color: rgb(0, 0, 100);
+    border-radius: 8px;
+}
+
+.header {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    min-height: 3.75rem;
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 6px;
+    padding-inline: 8px;
+    z-index: 1000;
+}
+
+.location-bar {
+    position: relative;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    width: 25rem;
+    z-index: 1000;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.18);
+}
+
+.location-bar:hover {
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.25);
+}
+
+.location-bar .focus {
+    box-shadow: 0px 0px 8px rgba(17, 0, 255, 0.25);
+}
+
+.drop-down {
+    position: absolute;
+    top: 65px;
+    width: 100%;
+    height: 400px;
+    margin-left: -8px;
+    z-index: 10000;
+    background-color: white;
+    border-radius: 10px;
+    visibility: hidden;
+}
+
+.search-bar {
+    flex: 1;
+    border: none;
+    font-size: 1.2rem;
+    margin-inline: 4px;
+    outline: none;
+    background-color: inherit;
+}
+
+.search-bar::placeholder {
+    color: rgb(155, 155, 155);
+}
+
+
+.main {
+    padding: 10px;  
+    height: 80vh; 
+    margin: 4.6rem auto;
+}
+
+.home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.area {
+    padding: 10px;
+}
+
+.area.full-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.area.scroll-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.current-area {
+    width: 540px;
+    height: 65%;
+}
+
+.weekly-area {
+    flex: 1;
+    height: 65%;
+}
+
+.hourly-area {
+    position: relative;
+    width: 100%;
+    height: 35%;
+    max-width: calc(100% - 30px);
+    padding-right: 20px;
+}
+
+.weekly-area-mobile {
+    width: 0px;
+    height: 0px;
+    visibility: hidden;
+    padding: 0px;
+}
+
+.section-title {
+    margin: 0px;
+    font-size: 28px;
+    font-weight: 360;
+}
+
+.card.fill {
+    width: 100%;
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.scroll-area {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    padding-block: 8px;
+    padding-inline: 5px;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.hour-card {
+    min-width: 130px;
+    width: 130px;
+    height: 100%;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    
+}
+
+.card.fill.current {
+    display: flex;
+    flex-direction: column;
+}
+
+.top-row {
+    height: 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-inline: 20px;
+    margin-top: 18px;
+    margin-left: 60px;
+}
+
+.bottom-row {
+    height: 40%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    margin-inline: 20px;
+    margin-bottom: 10px;
+}
+
+.temperature {
+    font-size: 90px;
+}
+
+.temperature-container {
+    font-size: 70px;
+    margin-inline-start: -38px;
+    margin-top: 15px;
+}
+
+.component-card {
+    display: flex;
+    flex-direction: column;
+    gap: -20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail {
+    color: rgb(19, 200, 255);
+    font-size: 20px;
+    margin: 0px;
+}
+
+.detail.dark {
+    color: rgb(23, 19, 255);
+}
+
+.card.fill.day {
+    width: calc(100% - 40px);
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.day-card {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.float {
+    position: absolute;
+    display: inline;
+    opacity: 1;
+    z-index: 1000;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.35);
+    transition: transform 0.3s;
+}
+
+.float:hover{
+    transform: translateY(-5px)
+}
+
+.scroll-left {
+    left: 20px;
+    top: 95px;
+}
+
+.scroll-right {
+    right: 20px;
+    top: 95px;
+}
+
+@media (max-width: 400px){
+    html, body {
+        overflow: scroll;
+    }
+
+    body {
+        background-size: auto;
+        background-position: center 0%;
+    }
+
+    .main {
+        padding: 5px;  
+        height: 180vh; 
+        margin: 5.4rem auto;
+    }
+
+    .current-area {
+        width: 100%;
+        height: 65%;
+    }
+    
+    .weekly-area {
+        width: 0px;
+        height: 0px;
+        visibility: hidden;
+        opacity: 0;
+        padding: 0px;
+    }
+    
+    .hourly-area {
+        position: relative;
+        width: 100%;
+        height: 35%;
+        max-width: calc(100% - 30px);
+        padding-bottom: 0px;
+    }
+
+    .weekly-area-mobile {
+        width: 100%;
+        height: fit-content;
+        visibility: visible;
+        padding: 10px;
+        padding-top: 0px;
+    }
+
+    .temperature {
+        font-size: 60px;
+    }
+    
+    .temperature-container {
+        font-size: 30px;
+        margin-left: 15px;
+        margin-top: 40px;
+    }
+
+    .detail {
+        font-size: 14px;
+    }
+
+    .top-row {
+        margin-left: 30px;
+    }
+
+    .float {
+        visibility: hidden;
+    }
+
+    .scroll-area {
+        overflow-x: scroll;
+    }
+
+    .hour-card {
+        min-width: 90px;
+        width: 90px;
+    }
+
+    .scroll-area {
+        gap: 8px;
+    }
+
+    .day-mobile {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4px;
+        margin-bottom: 10px;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    .day-card-mobile {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 8px;
+    }
+
+    .week-day {
+        margin-left: 20px;
+        width: 45px;
+    }
+
+    .day-temperature {
+        margin-right: 20px;
+    }
+
+    .seperator {
+        margin-inline: 20px;
+        border-style: inset;
+        border-width: 0.1px;
+        border-top: none;
+        border-inline: none;
+    }
+}

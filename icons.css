@@ -1,0 +1,33 @@
+.current-weather-icon {
+    width: calc(100% - 70px);
+}
+
+.bubble-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.icon-default {
+    width: 30px;
+    height: 30px;
+}
+
+.icon-component {
+    width: 40px;
+}
+
+.icon-weather {
+    width: 50px;
+}
+
+.icon-float {
+    width: 55px;
+    height: 55px;
+}
+
+@media (max-width: 400px){
+    .current-weather-icon {
+        width: calc(100% - 30px);
+    }
+}
+
