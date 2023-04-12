@@ -232,7 +232,7 @@ body {
 }
 
 .temperature-container {
-    font-size: 70px;
+    font-size: 65px;
     margin-inline-start: -38px;
     margin-top: 15px;
 }
@@ -348,7 +348,7 @@ body {
     
     .temperature-container {
         font-size: 30px;
-        margin-left: 15px;
+        margin-left: 10px;
         margin-top: 40px;
     }
 
@@ -357,7 +357,7 @@ body {
     }
 
     .top-row {
-        margin-left: 30px;
+        margin-left: 35px;
     }
 
     .float {
