@@ -77,6 +77,30 @@ body {
     visibility: hidden;
 }
 
+.drop-down-item {
+    font-size: 16px;
+    padding: 15px;
+    word-wrap: break-word;
+}
+
+.drop-down-item:first-child {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.drop-down-item:last-child{
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.drop-down-item:active {
+    background-color: rgb(228, 228, 228);
+}
+
+.drop-down-item:hover {
+    background-color: rgb(236, 236, 236);
+}
+
 .search-bar {
     flex: 1;
     border: none;
@@ -94,7 +118,7 @@ body {
 .main {
     padding: 10px;  
     height: 80vh; 
-    margin: 4.6rem auto;
+    margin: 4.4rem auto;
 }
 
 .home {
@@ -253,13 +277,14 @@ body {
     opacity: 1;
     z-index: 1000;
     border: none;
-    border-radius: 30px;
+    border-radius: 30px; 
     box-shadow: 0px 3px 15px rgba(0,0,0,0.35);
     transition: transform 0.3s;
 }
 
 .float:hover{
-    transform: translateY(-5px)
+    transform: translateY(-5px);
+    z-index: 2000;
 }
 
 .scroll-left {
@@ -384,5 +409,10 @@ body {
         border-width: 0.1px;
         border-top: none;
         border-inline: none;
+    }
+
+    .drop-down-item {
+        font-size: 1.2rem;
+        padding: 14px;
     }
 }
