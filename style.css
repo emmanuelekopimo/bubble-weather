@@ -288,12 +288,12 @@ body {
 }
 
 .scroll-left {
-    left: 20px;
+    left: -18px;
     top: 95px;
 }
 
 .scroll-right {
-    right: 20px;
+    right: -18px;
     top: 95px;
 }
 

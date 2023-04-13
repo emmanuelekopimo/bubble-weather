@@ -67,13 +67,13 @@ const updateWeather = () => {
                         currentWeatherIcon.setAttribute('src',isDay?'./icons/weather/sun.png':'./icons/weather/moon.png')
                         break
                     case 2: 
-                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/sun-cloud.png':'./icons/weather/moon.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/sun-cloud.png':'./icons/weather/cloud-moon.png')
                         break
                     case 3:
-                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/cloud-moon.png')
                         break
                     case 45: case 48:
-                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/cloud-moon.png')
                         break
                     case 51: case 53: case 55: case 56: case 57: case 61: 
                     case 63: case 65: case 66: case 67:
@@ -186,13 +186,13 @@ const updateWeather = () => {
                             hourIcon[count].setAttribute('src',isDay?'./icons/weather/sun.png':'./icons/weather/moon.png')
                             break
                         case 2: 
-                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/sun-cloud.png':'./icons/weather/moon.png')
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/sun-cloud.png':'./icons/weather/cloud-moon.png')
                             break
                         case 3:
-                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/cloud-moon.png')
                             break
                         case 45: case 48:
-                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/cloud-moon.png')
                             break
                         case 51: case 53: case 55: case 56: case 57: case 61: 
                         case 63: case 65: case 66: case 67:
