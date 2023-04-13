@@ -31,8 +31,9 @@ const gps = {
 // test for previous data and actuallu get it
 if (localStorage.getItem('test') === 'true'){
     lastCity = localStorage.getItem('city')
-    gps.latitude = localStorage.getItem('longitude')
-    gps.longitude = localStorage.getItem('latitude')
+    gps.latitude = localStorage.getItem('latitude')
+    gps.longitude = localStorage.getItem('longitude')
+    console.log(gps)
     searchBar.value = lastCity
 }
 
@@ -253,54 +254,62 @@ searchBar.onblur = () => {
 
 searchBar.oninput = () => {
     // Where search comes in
-    fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchBar.value}`)
-    //fetch('http://127.0.0.1:5501/api/city.json')
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-            let resultStack =''
-            let resultsList = data.results.slice(0,5)
-            for (let searchResult of resultsList){
-                admin2 = searchResult.admin2===undefined?'':searchResult.admin2+','
-                resultStack += `<div class="drop-down-item" lat="${searchResult.latitude}" long="${searchResult.longitude}">
-                ${searchResult.name}, ${admin2} ${searchResult.admin1}, ${searchResult.country}
-                </div>`
-            }
-            dropDown.innerHTML = resultStack
-            // Set new height 
-            let totalHeight = 0
-            
-            document.querySelectorAll('.drop-down-item').forEach((element)=>{
-                    totalHeight += element.offsetHeight
-                    element.onclick = () => {
-                        lastCity = element.innerText
-                        searchBar.value = lastCity
-                        gps.latitude = element.getAttribute('lat')
-                        gps.longitude = element.getAttribute('long')
-                        localStorage.setItem('latitude',gps.latitude.toString())
-                        localStorage.setItem('longitude',gps.longitude.toString())
-                        localStorage.setItem('city',lastCity)
-                        localStorage.setItem('test','true')
-                        currentAction.setAttribute('src','./icons/loading.gif')
-                        updateWeather()
-                        // Latency effect to show selected option
-                        setTimeout(() => {
-                            dropDown.style.visibility = 'hidden'
-                        }, 100)
-                    }
-                })
-            dropDown.style.height = `${totalHeight}px`
-        })
-        .catch(
-            err => {
-                console.error(err)
-                dropDown.innerHTML = `<div class="drop-down-item">
-                Ensure this device is online 📡
-                </div>`
-            }
-        )
-    
+    if (searchBar.value.length>0){
+        fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchBar.value}`)
+        //fetch('http://127.0.0.1:5501/api/city.json')
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                let resultStack =''
+                let resultsList = data.results.slice(0,5)
+                for (let searchResult of resultsList){
+                    admin2 = searchResult.admin2===undefined?'':searchResult.admin2+','
+                    resultStack += `<div class="drop-down-item" lat="${searchResult.latitude}" long="${searchResult.longitude}">
+                    ${searchResult.name}, ${admin2} ${searchResult.admin1}, ${searchResult.country}
+                    </div>`
+                }
+                dropDown.innerHTML = resultStack
+                // Set new height 
+                let totalHeight = 0
+                
+                document.querySelectorAll('.drop-down-item').forEach((element)=>{
+                        totalHeight += element.offsetHeight
+                        element.onclick = () => {
+                            lastCity = element.innerText
+                            searchBar.value = lastCity
+                            gps.latitude = element.getAttribute('lat')
+                            gps.longitude = element.getAttribute('long')
+                            localStorage.setItem('latitude',gps.latitude.toString())
+                            localStorage.setItem('longitude',gps.longitude.toString())
+                            localStorage.setItem('city',lastCity)
+                            localStorage.setItem('test','true')
+                            currentAction.setAttribute('src','./icons/loading.gif')
+                            updateWeather()
+                            // Latency effect to show selected option
+                            setTimeout(() => {
+                                dropDown.style.visibility = 'hidden'
+                            }, 100)
+                        }
+                    })
+                dropDown.style.height = `${totalHeight}px`
+            })
+            .catch(
+                err => {
+                    console.error(err)
+                    dropDown.innerHTML = `<div class="drop-down-item">
+                    No search results for "${searchBar.value}"
+                    </div>`
+                    dropDown.style.height = `${document.querySelector('.drop-down-item').offsetHeight}px`
+                }
+            )
+        }
+    else {
+        dropDown.innerHTML = `<div class="drop-down-item">
+        Start typing to search for your city
+        </div>`
+        dropDown.style.height =  `${document.querySelector('.drop-down-item').offsetHeight}px`
+    }
 
 }
 
