@@ -234,7 +234,7 @@ body {
 .temperature-container {
     font-size: 65px;
     margin-inline-start: -38px;
-    margin-top: 15px;
+    margin-top: 30px;
 }
 
 .component-card {
@@ -252,7 +252,7 @@ body {
 }
 
 .detail.dark {
-    color: rgb(23, 19, 255);
+    color: rgb(0, 0, 100);
 }
 
 .card.fill.day {
@@ -295,6 +295,10 @@ body {
 .scroll-right {
     right: 20px;
     top: 95px;
+}
+
+.temperature-range {
+    margin-top: -10px;
 }
 
 @media (max-width: 400px){
@@ -349,7 +353,7 @@ body {
     .temperature-container {
         font-size: 30px;
         margin-left: 10px;
-        margin-top: 40px;
+        margin-top: 25px;
     }
 
     .detail {
@@ -394,12 +398,12 @@ body {
         padding-block: 8px;
     }
 
-    .week-day {
+    .week-day-mobile {
         margin-left: 20px;
         width: 45px;
     }
 
-    .day-temperature {
+    .day-temperature-mobile {
         margin-right: 20px;
     }
 
@@ -415,4 +419,9 @@ body {
         font-size: 1.2rem;
         padding: 14px;
     }
+
+    .temperature-range {
+        margin-top: 0px;
+    }
+    
 }

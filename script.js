@@ -9,8 +9,18 @@ const scrollArea = document.querySelector('.scroll-area')
 const currentWeatherIcon = document.querySelector('.current-weather-icon')
 const currentTemperature = document.querySelector('.temperature.current')
 const detailWind = document.querySelector('.detail.wind')
-const detailHumidity = document.querySelector('.detail.humidity')
+const detailTemperature = document.querySelector('.detail.temperature-range')
 const detailRain = document.querySelector('.detail.rain')
+const detailDayName = document.querySelectorAll('.week-day')
+const detailDayNameMobile = document.querySelectorAll('.week-day-mobile')
+const detailDayTemp = document.querySelectorAll('.day-temperature')
+const detailDayTempMobile = document.querySelectorAll('.day-temperature-mobile')
+const detailWeeklyIcon = document.querySelectorAll('.icon-weather.weekly')
+const detailWeeklyIconMobile = document.querySelectorAll('.icon-weather-mobile.weekly')
+const detailHourlyIcon = document.querySelectorAll('.icon-weather.hourly')
+const hourTime = document.querySelectorAll('.hour-time')
+const hourTemp = document.querySelectorAll('.hour-temperature')
+const hourIcon = document.querySelectorAll('.icon-weather.hourly')
 
 var lastCity = ''
 const gps = {
@@ -18,36 +28,51 @@ const gps = {
     longitude: 0
 }
 
+// test for previous data and actuallu get it
+if (localStorage.getItem('test') === 'true'){
+    lastCity = localStorage.getItem('city')
+    gps.latitude = localStorage.getItem('longitude')
+    gps.longitude = localStorage.getItem('latitude')
+    searchBar.value = lastCity
+}
+
 // Periodic Updating of weather
 const updateWeather = () => {
     if (lastCity.length > 0){
-        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${gps.latitude}&longitude=${gps.longitude}&hourly=temperature_2m,weathercode&current_weather=true`)
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${gps.latitude}&longitude=${gps.longitude}&hourly=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,precipitation_probability_max&current_weather=true&timezone=auto`)
+            //fetch('http://127.0.0.1:5501/api/current-weather.json')
             .then(res => {
                 return res.json()
             })
             .then(data =>{
-                currentTemperature.innerText = parseFloat(data.current_weather.temperature)
-                    .toFixed(0)
+                console.log(data)
+                currentTemperature.innerText = Math.round(parseFloat(data.current_weather.temperature))
                     .toString()
-                detailWind.innerText = `${parseFloat(data.current_weather.windspeed)
-                    .toFixed(0)
+                detailWind.innerText = `${Math.round(parseFloat(data.current_weather.windspeed))
                     .toString()} Km/h `
-                console.log(data.current_weather.weathercode)
+                detailRain.innerText = `${Math.round(parseFloat(data.daily.precipitation_probability_max[0]))
+                    .toString()} %`
+                detailTemperature.innerHTML = `
+                    ${parseFloat(Math.round(data.daily.apparent_temperature_min[0]))
+                        .toString()}
+                        <sup class="detail">৹</sup> / 
+                    ${parseFloat(Math.round(data.daily.apparent_temperature_max[0]))
+                        .toString()}
+                        <sup class="detail">৹</sup>`
+                    
+                let isDay = data.current_weather.is_day===1?true:false
                 switch(data.current_weather.weathercode){
-                    case 0:
-                        currentWeatherIcon.setAttribute('src', './icons/weather/sun.png')
-                        break
-                    case 1:
-                        currentWeatherIcon.setAttribute('src', './icons/weather/sun.png')
+                    case 0: case 1:
+                        currentWeatherIcon.setAttribute('src',isDay?'./icons/weather/sun.png':'./icons/weather/moon.png')
                         break
                     case 2: 
-                        currentWeatherIcon.setAttribute('src', './icons/weather/sun-cloud.png.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/sun-cloud.png':'./icons/weather/moon.png')
                         break
                     case 3:
-                        currentWeatherIcon.setAttribute('src', './icons/weather/cloud.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
                         break
                     case 45: case 48:
-                        currentWeatherIcon.setAttribute('src', './icons/weather/cloud.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
                         break
                     case 51: case 53: case 55: case 56: case 57: case 61: 
                     case 63: case 65: case 66: case 67:
@@ -66,14 +91,135 @@ const updateWeather = () => {
                         currentWeatherIcon.setAttribute('src', './icons/weather/storm.png')
                         break
                     default:
-                        currentWeatherIcon.setAttribute('src', './icons/weather/sun.png')
+                        currentWeatherIcon.setAttribute('src', isDay?'./icons/weather/sun.png':'./icons/weather/moon.png')
+                }
+                
+                let daysName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                let days = data.daily.time
+                days.shift()
+                let daysCode = data.daily.weathercode
+                daysCode.shift()
+                let daysTemp = data.daily.temperature_2m_max
+                daysTemp.shift()
+                let count = 0
+                for (let day of days){
+                    let date = new Date(day)
+                    let dayName = daysName[date.getDay()]
+                    let dayCode = daysCode[count]
+                    let dayTemp = Math.round(daysTemp[count]).toString()
+                    detailDayName[count].innerText = dayName
+                    detailDayNameMobile[count].innerText = dayName
+                    detailDayTemp[count].innerHTML = `${dayTemp} <sup class="detail">৹</sup> C`
+                    detailDayTempMobile[count].innerHTML = `${dayTemp} <sup class="detail dark">৹</sup> C`
+                    switch(dayCode){
+                        case 0: case 1:
+                            detailWeeklyIcon[count].setAttribute('src','./icons/weather/sun.png')
+                            detailWeeklyIconMobile[count].setAttribute('src','./icons/weather/sun.png')
+                            break
+                        case 2: 
+                            detailWeeklyIcon[count].setAttribute('src','./icons/weather/sun.png')
+                            detailWeeklyIconMobile[count].setAttribute('src','./icons/weather/sun.png')
+                            break
+                        case 3:
+                            detailWeeklyIcon[count].setAttribute('src','./icons/weather/sun.png')
+                            detailWeeklyIconMobile[count].setAttribute('src','./icons/weather/sun.png')
+                            break
+                        case 45: case 48:
+                            detailWeeklyIcon[count].setAttribute('src','./icons/weather/sun.png')
+                            detailWeeklyIconMobile[count].setAttribute('src','./icons/weather/sun.png')
+                            break
+                        case 51: case 53: case 55: case 56: case 57: case 61: 
+                        case 63: case 65: case 66: case 67:
+                            detailWeeklyIcon[count].setAttribute('src', './icons/weather/rain.png')
+                            detailWeeklyIconMobile[count].setAttribute('src', './icons/weather/rain.png')
+                            break
+                        case 71: case 73: case 75: case	77:
+                            detailWeeklyIcon[count].setAttribute('src', './icons/weather/snow.png')
+                            detailWeeklyIconMobile[count].setAttribute('src', './icons/weather/snow.png')
+                            break
+                        case 80: case 81: case 82:
+                            detailWeeklyIcon[count].setAttribute('src', './icons/weather/rain.png')
+                            detailWeeklyIconMobile[count].setAttribute('src', './icons/weather/rain.png')
+                            break
+                        case 85: case 86:
+                            detailWeeklyIcon[count].setAttribute('src', './icons/weather/snow.png')
+                            detailWeeklyIconMobile[count].setAttribute('src', './icons/weather/snow.png')
+                            break
+                        case 95: case 96: case 99:
+                            detailWeeklyIcon[count].setAttribute('src', './icons/weather/storm.png')
+                            detailWeeklyIconMobile[count].setAttribute('src', './icons/weather/storm.png')
+                            break
+                        default:
+                            detailWeeklyIcon[count].setAttribute('src', './icons/weather/sun.png')
+                            detailWeeklyIconMobile[count].setAttribute('src', './icons/weather/sun.png')
+                    }
 
+                    count += 1
+                }
 
+                // Hourly weather
+                let startTime = data.hourly.time.indexOf(data.current_weather.time) 
+                let hours = data.hourly.time.slice(startTime, startTime+13)
+                let hoursTemp = data.hourly.temperature_2m.slice(startTime, startTime+13)
+                let hoursCode = data.hourly.weathercode.slice(startTime, startTime+13)
+                count = 0
+                for (let hour of hours){
+                    let date = new Date(hour)
+                    let isDay = date.getHours()>5 && date.getHours()<20
+                    if (date.getHours()===0){
+                        hourTime[count].innerText = '12:00 AM'
+                    }
+                    else if (date.getHours()===12){
+                        hourTime[count].innerText = '12:00 PM'
+                    }
+                    else if (date.getHours()<12){
+                        hourTime[count].innerText = `${date.getHours().toString().padStart(2,'0')}:00 AM`
+                    }
+                    else {
+                        hourTime[count].innerText = `${(date.getHours()-12).toString().padStart(2,'0')}:00 PM`
+                    }
+                    hourTemp[count].innerHTML = `${Math.round(hoursTemp[count])} <sup class="detail dark">৹</sup> C`
+
+                    switch(hoursCode[count]){
+                        case 0: case 1:
+                            hourIcon[count].setAttribute('src',isDay?'./icons/weather/sun.png':'./icons/weather/moon.png')
+                            break
+                        case 2: 
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/sun-cloud.png':'./icons/weather/moon.png')
+                            break
+                        case 3:
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
+                            break
+                        case 45: case 48:
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/cloud.png':'./icons/weather/moon.png')
+                            break
+                        case 51: case 53: case 55: case 56: case 57: case 61: 
+                        case 63: case 65: case 66: case 67:
+                            hourIcon[count].setAttribute('src', './icons/weather/rain.png')
+                            break
+                        case 71: case 73: case 75: case	77:
+                            hourIcon[count].setAttribute('src', './icons/weather/snow.png')
+                            break
+                        case 80: case 81: case 82:
+                            hourIcon[count].setAttribute('src', './icons/weather/rain.png')
+                            break
+                        case 85: case 86:
+                            hourIcon[count].setAttribute('src', './icons/weather/snow.png')
+                            break
+                        case 95: case 96: case 99:
+                            hourIcon[count].setAttribute('src', './icons/weather/storm.png')
+                            break
+                        default:
+                            hourIcon[count].setAttribute('src', isDay?'./icons/weather/sun.png':'./icons/weather/moon.png')
+                    }
+                    count +=1
                 }
             })
+        
+        currentAction.setAttribute('src','./icons/check.png')
     }
 }
-setInterval (updateWeather, 10000) // Every 10 Seconds
+setInterval (updateWeather, 5000) // Every 3 Seconds
 
 searchBar.spellCheck = false
 searchBar.onfocus = () => {
@@ -99,15 +245,16 @@ searchBar.onfocus = () => {
 searchBar.onblur = () => {
     searchBar.value = lastCity
     currentAction.setAttribute('src','./icons/loading.gif')
+    updateWeather()
     setTimeout(() => {
         dropDown.style.visibility = 'hidden'
     }, 150)
-    // Update weather here
 }
 
 searchBar.oninput = () => {
     // Where search comes in
     fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchBar.value}`)
+    //fetch('http://127.0.0.1:5501/api/city.json')
         .then(res => {
             return res.json();
         })
@@ -121,7 +268,7 @@ searchBar.oninput = () => {
                 </div>`
             }
             dropDown.innerHTML = resultStack
-                    // Set new height 
+            // Set new height 
             let totalHeight = 0
             
             document.querySelectorAll('.drop-down-item').forEach((element)=>{
@@ -131,6 +278,11 @@ searchBar.oninput = () => {
                         searchBar.value = lastCity
                         gps.latitude = element.getAttribute('lat')
                         gps.longitude = element.getAttribute('long')
+                        localStorage.setItem('latitude',gps.latitude.toString())
+                        localStorage.setItem('longitude',gps.longitude.toString())
+                        localStorage.setItem('city',lastCity)
+                        localStorage.setItem('test','true')
+                        currentAction.setAttribute('src','./icons/loading.gif')
                         updateWeather()
                         // Latency effect to show selected option
                         setTimeout(() => {
@@ -142,7 +294,10 @@ searchBar.oninput = () => {
         })
         .catch(
             err => {
-                console.log(err)
+                console.error(err)
+                dropDown.innerHTML = `<div class="drop-down-item">
+                Ensure this device is online 📡
+                </div>`
             }
         )
     
