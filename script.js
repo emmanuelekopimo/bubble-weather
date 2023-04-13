@@ -45,7 +45,7 @@ const updateWeather = () => {
                 return res.json()
             })
             .then(data =>{
-                console.log(data)
+                
                 currentTemperature.innerText = Math.round(parseFloat(data.current_weather.temperature))
                     .toString()
                 detailWind.innerText = `${Math.round(parseFloat(data.current_weather.windspeed))
