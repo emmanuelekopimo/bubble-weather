@@ -16,10 +16,10 @@ No installation required, the app can be accessed through any web browser.
 
 ## Technologies Used 🤖
 
-HTML
-CSS
-JavaScript
-Open-meteo weather API
+ - HTML
+ - CSS
+ - JavaScript
+ - Open-meteo weather API
 
 ## How to Use Bubble Weather 📱
 
