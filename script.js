@@ -5,7 +5,7 @@ const scrollRight = document.querySelector('.scroll-right')
 const scrollLeft = document.querySelector('.scroll-left')
 const scrollArea = document.querySelector('.scroll-area')
 
-// Weather elements
+// Weather DOM elements
 const currentWeatherIcon = document.querySelector('.current-weather-icon')
 const currentTemperature = document.querySelector('.temperature.current')
 const detailWind = document.querySelector('.detail.wind')
@@ -22,6 +22,7 @@ const hourTime = document.querySelectorAll('.hour-time')
 const hourTemp = document.querySelectorAll('.hour-temperature')
 const hourIcon = document.querySelectorAll('.icon-weather.hourly')
 
+// Set main variables
 var lastCity = ''
 const gps = {
     latitude: 0,
@@ -160,9 +161,9 @@ const updateWeather = () => {
 
                 // Hourly weather
                 let startTime = data.hourly.time.indexOf(data.current_weather.time) 
-                let hours = data.hourly.time.slice(startTime, startTime+13)
-                let hoursTemp = data.hourly.temperature_2m.slice(startTime, startTime+13)
-                let hoursCode = data.hourly.weathercode.slice(startTime, startTime+13)
+                let hours = data.hourly.time.slice(startTime, startTime+ 24)
+                let hoursTemp = data.hourly.temperature_2m.slice(startTime, startTime+ 24)
+                let hoursCode = data.hourly.weathercode.slice(startTime, startTime+24)
                 count = 0
                 for (let hour of hours){
                     let date = new Date(hour)
@@ -215,9 +216,13 @@ const updateWeather = () => {
                     }
                     count +=1
                 }
+                currentAction.setAttribute('src','./icons/check.png')
+            })
+            .catch(err => {
+                currentAction.setAttribute('src','./icons/loading.gif')
             })
         
-        currentAction.setAttribute('src','./icons/check.png')
+        
     }
 }
 setInterval (updateWeather, 5000) // Every 3 Seconds

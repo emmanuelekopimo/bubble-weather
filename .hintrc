@@ -10,7 +10,8 @@
       "default",
       {
         "ignore": [
-          "height: fit-content"
+          "height: fit-content",
+          "user-select"
         ]
       }
     ],

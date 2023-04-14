@@ -1,6 +1,7 @@
 * {
     font-family: Roboto, Arial;
     color: rgb(0, 0, 100);
+    user-select: none;
 }
 
 html, body {
@@ -11,7 +12,7 @@ html, body {
 
 
 body {
-    background-image: url(./images/background.jpg);
+    background-image: url(./images/back.png);
     background-size: cover;
 }
 
