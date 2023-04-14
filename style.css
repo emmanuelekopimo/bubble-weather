@@ -342,6 +342,10 @@ body {
     max-height: 300px;
   }
 
+  .bottom-row {
+    gap: 5px;
+  }
+
   .weekly-area {
     width: 0px;
     height: 0px;
