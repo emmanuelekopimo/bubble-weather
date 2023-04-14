@@ -258,8 +258,9 @@ searchBar.onblur = () => {
 }
 
 searchBar.oninput = () => {
-    // Where search comes in
+    // Where city search comes in
     if (searchBar.value.length>0){
+        // Check API and parse JSON
         fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${searchBar.value}`)
         //fetch('http://127.0.0.1:5501/api/city.json')
             .then(res => {
@@ -275,7 +276,7 @@ searchBar.oninput = () => {
                     </div>`
                 }
                 dropDown.innerHTML = resultStack
-                // Set new height 
+                // Set new height for the drop down menu
                 let totalHeight = 0
                 
                 document.querySelectorAll('.drop-down-item').forEach((element)=>{
@@ -300,6 +301,7 @@ searchBar.oninput = () => {
                 dropDown.style.height = `${totalHeight}px`
             })
             .catch(
+                // Handle error appropriately
                 err => {
                     console.error(err)
                     dropDown.innerHTML = `<div class="drop-down-item">
@@ -324,6 +326,7 @@ var scrollingRight = false
 var scrollingLeft = false
 var scrollSpeed = 4
 
+// Handle hover events for the buttons
 scrollRight.onmouseover = () => {
     scrollingRight = true
 }
