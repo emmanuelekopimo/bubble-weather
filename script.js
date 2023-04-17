@@ -44,9 +44,11 @@ const updateDOM = (data) => {
   } else if (currentTime.getHours() === 12) {
     hourNow = "12:00 PM";
   } else if (currentTime.getHours() < 12) {
-    hourNow = `${date.getHours().toString().padStart(2, "0")}:00 AM`;
+    hourNow = `${currentTime.getHours().toString().padStart(2, "0")}:00 AM`;
   } else {
-    hourNow = `${(date.getHours() - 12).toString().padStart(2, "0")}:00 PM`;
+    hourNow = `${(currentTime.getHours() - 12)
+      .toString()
+      .padStart(2, "0")}:00 PM`;
   }
   dateTime.innerText = `Weather for ${currentTime.toDateString()} ${hourNow}`;
   currentTemperature.innerText = Math.round(
